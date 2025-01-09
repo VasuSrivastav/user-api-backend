@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import {connectDB }from "./config/db.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
+import authRefRoutes from "./routes/authRef.route.js";
 import dashboardRoutes from './routes/dashboard.route.js';
 import cors from "cors";
 
@@ -73,7 +74,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello World!" });
 });
 
-
+app.use("/api/auth", authRefRoutes);
 app.use('/api', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/posts',  postRoutes);

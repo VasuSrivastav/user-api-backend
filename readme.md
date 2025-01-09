@@ -137,6 +137,26 @@
   }
   ```
 
+### Get Authenticated User
+
+- **URL:** `/api/auth-user`
+- **Method:** `GET`
+- **Description:** Retrieves the authenticated user's details.
+- **Headers:**
+  - `Authorization`: `Bearer JWT_TOKEN`
+- **Response:**
+  ```json
+  {
+    "_id": "USER_ID",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "user",
+    "createdAt": "2023-10-01T00:00:00.000Z",
+    "updatedAt": "2023-10-01T00:00:00.000Z"
+  }
+  ```
+
+
 ## Post Routes
 
 ### Create Post
