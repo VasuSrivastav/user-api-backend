@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import {connectDB }from "./config/db.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
-import authRefRoutes from "./routes/authRef.route.js";
+import authRefRoutes from "./routes/auth.js";
 import dashboardRoutes from './routes/dashboard.route.js';
 import cors from "cors";
 
