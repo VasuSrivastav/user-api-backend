@@ -21,6 +21,7 @@ app.use(
 );
 app.use((req, res, next) => {
   res.removeHeader('Cross-Origin-Opener-Policy');
+    res.removeHeader('Cross-Origin-Embedder-Policy');
   next();
 });
 // const allowedOrigins = [
