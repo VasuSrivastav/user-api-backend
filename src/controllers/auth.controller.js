@@ -58,7 +58,6 @@ export const googleSignIn = async (req, res) => {
     if (!user) {
       const hashedPassword = await bcrypt.hash(`${name}+@google+${email}`, 10);
       user = new User({ name, email, password: hashedPassword });
-      Role = user.role;
       await user.save();
     }
     const Role = user.role;
