@@ -1,4 +1,70 @@
-# Backend API Documentation
+# Backend API Documentation --- postman api docs below
+
+## How to Run the Project Locally
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/your-repo/backend-project.git
+   cd backend-project
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory and add the following variables:
+
+   ```env
+   PORT=5002
+   MONGO_URI=uri_db
+   JWT_SECRET=your_jwt_secret
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   ```
+
+   some base url are hard coded so need to change them as cors frontent url--- may be convert it in env later
+
+4. **Run the application:**
+
+   ```sh
+   npm start
+
+   or
+
+   for local run
+   npm run dev
+   ```
+
+5. **Access the API:**
+   The API will be available at `http://localhost:port`.
+
+## Features of the Application
+
+- **User Authentication:**
+
+  - Register, login, and logout functionality.
+  - Google OAuth sign-in.
+
+- **Post Management:**
+
+  - Create, read, update, and delete posts.
+  - Pagination support for retrieving posts.
+
+- **JWT Authentication:**
+  - Middleware to protect routes and ensure only authenticated users can access certain endpoints.
+
+## Additional Libraries or Tools Used
+
+- **express:** Web framework for Node.js.
+- **mongoose:** MongoDB object modeling tool.
+- **express-validator:** Middleware for validating and sanitizing request data.
+- **jsonwebtoken:** Library to work with JSON Web Tokens.
+- **bcrypt:** Library to hash passwords.
+- **google-auth-library:** Google OAuth client library.
 
 ## Authentication Routes
 
@@ -167,14 +233,14 @@
 - **Description:** Middleware that verifies the JWT token in the request headers. If the token is valid, the user information is attached to the request object. If the token is missing or invalid, a 401 Unauthorized or 403 Forbidden response is returned.
 
 ```javascript
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const authenticateJWT = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Unauthorized' });
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Forbidden' });
+    if (err) return res.status(403).json({ message: "Forbidden" });
     req.user = user;
     next();
   });
@@ -204,5 +270,3 @@ export default authenticateJWT;
   - `description`: String, required
   - `user`: ObjectId, reference to User model, required
   - `createdAt`: Date, default: Date.now
-
-`
