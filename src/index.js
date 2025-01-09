@@ -19,6 +19,28 @@ app.use(
     credentials: true,
   })
 );
+app.use((req, res, next) => {
+  res.removeHeader('Cross-Origin-Opener-Policy');
+  next();
+});
+// const allowedOrigins = [
+//   "https://assessment-frontend-mu.vercel.app",
+//   "https://another-allowed-origin.com",
+//   "https://yet-another-allowed-origin.com"
+// ];
+
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
 
 app.use(cookieParser());
 // Middleware to parse JSON data in request body
