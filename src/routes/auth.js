@@ -1,8 +1,24 @@
 import express from 'express';
-import authenticateJWT from '../middleware/authenticateJWT.js';
+import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const router = express.Router();
+
+// Middleware to authenticate JWT
+const authenticateJWT = (req, res, next) => {
+    const token = req.header('Authorization');
+    if (!token) {
+        return res.status(401).json({ message: 'No token, authorization denied' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, 'your_jwt_secret'); // Replace 'your_jwt_secret' with your actual secret
+        req.user = decoded.user;
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Token is not valid' });
+    }
+};
 
 router.get('/auth-user', authenticateJWT, async (req, res) => {
     try {
