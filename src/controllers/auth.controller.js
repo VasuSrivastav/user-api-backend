@@ -29,14 +29,15 @@ export const loginUser = async (req, res) => {
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   const { email, password } = req.body;
-  const Role = req.user.role;
+  
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
-
+    const Role = user.role;
+    console.log("Role",Role);
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token ,Role});
   } catch (err) {
@@ -47,7 +48,6 @@ export const loginUser = async (req, res) => {
 
 export const googleSignIn = async (req, res) => {
   const { token } = req.body;
-  let Role = req.user.role;
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -61,6 +61,8 @@ export const googleSignIn = async (req, res) => {
       Role = user.role;
       await user.save();
     }
+    const Role = user.role;
+    console.log("Role",Role);
     const jwtToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.cookie("jwtToken", jwtToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000, // MS
