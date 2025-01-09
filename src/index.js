@@ -15,7 +15,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://assessment-frontend-mu.vercel.app",
     credentials: true,
   })
 );
