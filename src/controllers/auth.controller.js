@@ -29,7 +29,7 @@ export const loginUser = async (req, res) => {
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   const { email, password } = req.body;
-
+  const Role = req.user.role;
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -38,7 +38,7 @@ export const loginUser = async (req, res) => {
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token ,Role});
   } catch (err) {
     console.error('Error in loginUser:', err);
     res.status(500).json({ error: err.message });
@@ -47,6 +47,7 @@ export const loginUser = async (req, res) => {
 
 export const googleSignIn = async (req, res) => {
   const { token } = req.body;
+  let Role = req.user.role;
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -57,6 +58,7 @@ export const googleSignIn = async (req, res) => {
     if (!user) {
       const hashedPassword = await bcrypt.hash(`${name}+@google+${email}`, 10);
       user = new User({ name, email, password: hashedPassword });
+      Role = user.role;
       await user.save();
     }
     const jwtToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -66,7 +68,7 @@ export const googleSignIn = async (req, res) => {
       sameSite: "strict", // CSRF attacks cross-site request forgery attacks
       secure: process.env.NODE_ENV !== "development",
     });
-    res.json({ token: jwtToken });
+    res.json({ token: jwtToken, Role });
   } catch (err) {
     console.error('Error in googleSignIn:', err);
     res.status(500).json({ error: err.message });
