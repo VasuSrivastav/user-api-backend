@@ -12,7 +12,7 @@ const authenticateJWT = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, 'your_jwt_secret'); // Replace 'your_jwt_secret' with your actual secret
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); 
         req.user = decoded.user;
         next();
     } catch (error) {
