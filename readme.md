@@ -226,6 +226,67 @@
   }
   ```
 
+## Dashboard Routes
+
+### Get All Users
+
+- **URL:** `/api/dashboard`
+- **Method:** `GET`
+- **Description:** Retrieves all users. Only accessible by admin users.
+- **Response:**
+  ```json
+  [
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "user",
+      "createdAt": "2023-10-01T00:00:00.000Z",
+      "updatedAt": "2023-10-01T00:00:00.000Z",
+      "_id": "USER_ID"
+    }
+  ]
+  ```
+
+### Get User Info
+
+- **URL:** `/api/dashboard/:id`
+- **Method:** `GET`
+- **Description:** Retrieves information about a specific user, including the number of posts. Only accessible by admin users.
+- **Response:**
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "postCount": 5
+  }
+  ```
+
+### Update User Role
+
+- **URL:** `/api/dashboard/:id/role`
+- **Method:** `PUT`
+- **Description:** Updates the role of a specific user. Only accessible by admin users.
+- **Request Body:**
+  ```json
+  {
+    "role": "admin"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "User role updated successfully",
+    "user": {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "admin",
+      "createdAt": "2023-10-01T00:00:00.000Z",
+      "updatedAt": "2023-10-01T00:00:00.000Z",
+      "_id": "USER_ID"
+    }
+  }
+  ```
+
 ## Middleware
 
 ### JWT Authentication
@@ -259,6 +320,7 @@ export default authenticateJWT;
   - `email`: String, required, unique
   - `password`: String, required
   - `googleId`: String, unique, sparse (optional)
+  - `role`: String, enum: ["user", "admin"], default: "user"
   - `createdAt`: Date, default: Date.now
 
 ### Post Model

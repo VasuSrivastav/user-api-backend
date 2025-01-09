@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import {connectDB }from "./config/db.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
+import dashboardRoutes from './routes/dashboard.route.js';
 import cors from "cors";
 
 import cookieParser from "cookie-parser";
@@ -74,6 +75,7 @@ app.get("/", (req, res) => {
 
 
 app.use('/api', authRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/posts',  postRoutes);
 
 app.listen(PORT, () => {
