@@ -32,6 +32,7 @@ export const getUserInfo = async (req, res) => {
     res.json({
       name: user.name,
       email: user.email,
+      role,
       postCount,
     });
   } catch (err) {
