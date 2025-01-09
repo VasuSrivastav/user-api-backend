@@ -5,7 +5,7 @@ import isAdmin from '../middlewares/admin.middleware.js';
 
 const router = express.Router();
 
-router.get('/', authenticateJWT, isAdmin, getAllUsers);
+router.get('/', authenticateJWT, getAllUsers);
 router.get('/:id', authenticateJWT, isAdmin, getUserInfo);
 router.put('/:id/role', authenticateJWT, isAdmin, updateUserRole);
 

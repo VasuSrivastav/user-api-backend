@@ -2,6 +2,11 @@ import User from '../models/user.model.js';
 import Post from '../models/post.model.js';
 
 export const getAllUsers = async (req, res) => {
+  const currentUser = req.user;
+  const user = await User.findById(currentUser.id);
+  if (!user || user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied' });
+  }
   try {
     const users = await User.find();
     res.json(users);
