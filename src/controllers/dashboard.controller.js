@@ -17,6 +17,11 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getUserInfo = async (req, res) => {
+  const currentUser = req.user;
+  const quser = await User.findById(currentUser.id);
+  if (!quser || quser.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied' });
+  }
   const { id } = req.params;
   try {
     const user = await User.findById(id);
@@ -36,6 +41,11 @@ export const getUserInfo = async (req, res) => {
 };
 
 export const updateUserRole = async (req, res) => {
+  const currentUser = req.user;
+  const quser = await User.findById(currentUser.id);
+  if (!quser || quser.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied' });
+  }
   const { id } = req.params;
   const { role } = req.body;
 
