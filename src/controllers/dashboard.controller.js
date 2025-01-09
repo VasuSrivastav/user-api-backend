@@ -30,6 +30,7 @@ export const getUserInfo = async (req, res) => {
     const postCount = await Post.countDocuments({ user: id });
 
     res.json({
+      uid: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
