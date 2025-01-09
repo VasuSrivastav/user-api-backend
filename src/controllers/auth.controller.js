@@ -60,13 +60,13 @@ export const googleSignIn = async (req, res) => {
       await user.save();
     }
     const jwtToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.cookie("jwt", jwtToken, {
+    res.cookie("jwtToken", jwtToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000, // MS
       httpOnly: true, // prevent XSS attacks cross-site scripting attacks
       sameSite: "strict", // CSRF attacks cross-site request forgery attacks
       secure: process.env.NODE_ENV !== "development",
     });
-    // res.json({ token: jwtToken });
+    res.json({ token: jwtToken });
   } catch (err) {
     console.error('Error in googleSignIn:', err);
     res.status(500).json({ error: err.message });

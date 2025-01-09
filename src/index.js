@@ -22,8 +22,10 @@ app.use(
 app.use((req, res, next) => {
   // res.removeHeader('Cross-Origin-Opener-Policy');
   // res.removeHeader('Cross-Origin-Embedder-Policy');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  // res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
   next();
 });
 // const allowedOrigins = [
